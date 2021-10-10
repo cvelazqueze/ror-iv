@@ -1,0 +1,31 @@
+name: lint
+
+on:
+  push:
+    branches-ignore: [ $default-branch ]
+
+jobs:
+  lint:
+    name: lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - run: bundle install
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v1.6.0
+        with:
+          auto_fix: true
+          git_email: "developers@betterup.co"
+          github_token: ${{ secrets.github_token }}
+          rubocop: true
+          rubocop_args: "--auto-correct"
+          rubocop_command_prefix: bundle exec

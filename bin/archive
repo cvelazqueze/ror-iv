@@ -1,0 +1,5 @@
+#!/bin/bash
+
+set -e
+
+git archive --format tgz -o book-list.tgz HEAD

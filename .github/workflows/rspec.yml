@@ -1,0 +1,35 @@
+name: RSpec
+
+on:
+  push:
+    branches-ignore: [ $default-branch ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('yarn.lock') }}
+
+      - run: yarn install
+
+      - name: Compile javascript
+        run: bin/webpack
+
+      - name: Run tests
+        run: bundle exec rake

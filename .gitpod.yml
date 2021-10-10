@@ -1,0 +1,14 @@
+image:
+  file: .gitpod.Dockerfile
+
+ports:
+  # Rails server
+  - port: 3000
+    onOpen: open-preview
+
+tasks:
+  - init: bundle install && rails db:drop db:setup db:seed
+    command: rails server
+  - init: bundle install && yarn install
+    command: bin/webpack --watch
+  - command: bundle install

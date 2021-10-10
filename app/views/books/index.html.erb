@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h2>Books</h2>
+  <%= link_to 'New Book', new_book_path, {class: 'button button-header'} %>
+</div>
+
+<div class="cards-container">
+  <% @books.each do |book| %>
+    <div class="book-card" data-controller="book">
+      <h3 class="card-heading"><%= book.name %></h3>
+      <h4 class="card-subheading">Author: <strong><%= book.author.name %></strong></h4>
+      <h4 class="card-subheading">Year: <strong><%= book.year %></strong></h4>
+      <div class="form-group">
+        <label class="favorite-label" for=<%= "favorite-#{book.id}"%>>Favorite</label>
+        <input
+          type=checkbox
+          id=<%= "favorite-#{book.id}"%>
+          name=<%= "favorite-#{book.id}"%>
+          <%= "checked" if book.favorite? %>
+          data-book-id=<%= book.id %>
+          data-action="book#toggleFavorite"
+        />
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<br>

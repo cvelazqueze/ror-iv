@@ -1,0 +1,5 @@
+{
+  "build": { "dockerfile": ".codespaces.Dockerfile" },
+  "postCreateCommand": "bin/bundle install && bin/yarn install && bin/rails db:drop db:setup db:seed",
+  "postStartCommand": "bin/rails server && bin/webpack --watch"
+}
